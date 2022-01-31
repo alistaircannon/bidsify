@@ -1,7 +1,8 @@
+# For converting the output of dcm2niix into BIDS structure 
+# Matches the output of Steiner MRI for TD study 
+
 import os
-from posix import listdir 
 import re 
-from sys import path #, sys 
 
 def main(): 
 
@@ -16,7 +17,6 @@ def main():
         print("Run this: [dcm2niix command TBC]") # TO DO  -- dcm2niix -b y -o sub-00x -f 
         return 2 
 
-    # folder = os.path(sys.argv[1]) | os.curdir 
     folder = os.curdir 
     datatypes = ["anat", "dwi", "fmap", "func", "perf", "Dunno"] 
     replacements = { 
@@ -50,8 +50,6 @@ def main():
         except: 
             print(f"The folder {datatype}/ already exists.")
 
-    print("\n\n\n")
-
     # Rename and move each file 
     files = os.listdir(folder)
     for old_code in replacements: 
@@ -59,16 +57,14 @@ def main():
         regex = re.compile(old_code) 
         destination = destinations[new_code] # Which folder it will go into 
         for file in files: 
-            if re.search(regex, file): 
-                # new_name = path(file)
-                # print(new_name)
-                print(new_code)
-                # os.rename(file, )
-    
+            m = regex.search(file)
+            if m:  
+                new_name = regex.sub(new_code, file)
+                os.rename(file, f"{destination}/{new_name}") 
 
+    print("Success! There should now be a BIDS folder structure in this folder, with the files renamed.")
     return 0 
 
 if __name__ == "__main__": 
     main()
-        
-        
+

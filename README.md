@@ -17,7 +17,7 @@ sub-0x/
 		dwi = DTI (DTI_64_Dir_)
 	fmap/ 
 		fieldmap (gre_field_map) 
-		gre (2D_GRE_MT_tra_2mm) 
+		gre-mt (2D_GRE_MT_tra_2mm) 
 	func/ 
 		bold (BOLD_-_Resting_State) 
 	perf/ 		

@@ -18,7 +18,7 @@ def main():
         return 2 
 
     folder = os.curdir 
-    datatypes = ["anat", "dwi", "fmap", "func", "perf", "Dunno"] 
+    datatypes = ["anat", "dwi", "fmap", "func", "perf"] 
     replacements = { 
         # anat/  
         "T1_mprage_sag": "T1", 
@@ -31,16 +31,18 @@ def main():
         "BOLD_-_Resting_State": "bold", # BOLD_-_Resting_State  and  BOLD_-_Resting_State_MoCo 
         # perf/ 
         "fme_pcASL": "asl",  
-        # ??? Don't know what these are, so don't know which folder or label  
+        # Unsure how to label these -- not in BIDS specification 
         "AAHead_Scout_64ch-head-coil_i000": "scout-i", 
         "AAHead_Scout_64ch-head-coil": "scout", 
         "2D_GRE_MT_tra_2mm": "gre-mt"
     } 
     destinations = {
-        "T1": "anat", "Chimap": "anat", 
-        "dwi": "dwi", "fieldmap": "fmap", 
-        "bold": "func", "asl": "perf", 
-        "scout-i": "Dunno", "scout": "Dunno", "gre-mt": "Dunno"
+        "T1": "anat", "Chimap": "anat", "scout-i": "anat", "scout": "anat", 
+        "dwi": "dwi", 
+        "fieldmap": "fmap", "gre-mt": "fmap", 
+        "bold": "func", 
+        "asl": "perf"
+        
     }
 
     # Create datatype folders (eg. anat/ ) 

@@ -25,7 +25,7 @@ sub-0x/
 
 ``` 
 
-The BIDS specification does not like "scout" and "gre" as valid modality suffixes. 
+The BIDS specification does not list "scout" and "gre" as valid modality suffixes. 
 
 		
 		

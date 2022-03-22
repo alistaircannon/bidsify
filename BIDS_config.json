@@ -1,1 +1,13 @@
-
+{
+    "descriptions": [
+        {
+            {
+                "datatype": "anat", 
+                "modalityLabel": "T1", 
+                "criteria": {
+                    "sidecarFilename": "" 
+                }
+            }
+        }
+    ]
+}

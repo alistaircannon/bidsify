@@ -14,14 +14,15 @@ def main():
         return 1 
 
     if not input(BIDS_prompt).__contains__("y"): 
-        print("Run this: [dcm2niix command TBC]") # TO DO  -- dcm2niix -b y -o sub-00x -f 
+        print("Run this: [dcm2niix command TBC]") # TO DO  -- dcm2niix -b y -o sub-0x -f 
         return 2 
 
     folder = os.curdir 
-    datatypes = ["anat", "dwi", "fmap", "func", "perf"] 
+    datatypes = ["anat", "dwi", "fmap", "func", "perf", "scout", "qsm"] 
     replacements = { 
         # anat/  
-        "T1_mprage_sag": "T1", 
+        "T1_mprage_sag": "T1w", 
+        # qsm/ 
         "QSM_3D_me_tra_e": "Chimap", 
         # dwi/ 
         "DTI_64_Dir": "dwi",  # DTI_64_Dir_APa , APb , and  PA 
@@ -31,13 +32,16 @@ def main():
         "BOLD_-_Resting_State": "bold", # BOLD_-_Resting_State  and  BOLD_-_Resting_State_MoCo 
         # perf/ 
         "fme_pcASL": "asl",  
-        # Unsure how to label these -- not in BIDS specification 
+        # scout/ 
         "AAHead_Scout_64ch-head-coil_i000": "scout-i", 
         "AAHead_Scout_64ch-head-coil": "scout", 
+        # Unsure how to label -- not in BIDS specification 
         "2D_GRE_MT_tra_2mm": "gre-mt"
     } 
     destinations = {
-        "T1": "anat", "Chimap": "anat", "scout-i": "anat", "scout": "anat", 
+        "T1w": "anat", 
+        "Chimap": "qsm", 
+        "scout-i": "scout", "scout": "scout", 
         "dwi": "dwi", 
         "fieldmap": "fmap", "gre-mt": "fmap", 
         "bold": "func", 

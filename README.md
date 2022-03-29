@@ -10,7 +10,7 @@ Our data:-
 ```
 sub-0x/ 
 	anat/ 
-		T1 (T1_mprage_sag) 
+		T1w (T1_mprage_sag) 
 		Chimap = QSM (QSM_3D_me_tra_e)  
 		scout (AAHead_Scout_64ch-head-coil) 
 	dwi/ 

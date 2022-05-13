@@ -95,7 +95,6 @@ def main():
             # if m:  
                 fullname = regex.sub(new_name, file)
                 os.rename(file, f"{destination}/{fullname}") 
-        counter -= 1 
     
     print("Success! There should now be a BIDS folder structure in this folder, with the files renamed.")
     return 0 

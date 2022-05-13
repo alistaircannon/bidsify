@@ -14,12 +14,92 @@ def main():
         return 1 
 
     if not input(BIDS_prompt).__contains__("y"): 
-        print("Run this: [dcm2niix command TBC]") # TO DO  -- dcm2niix -b y -o sub-0x -f 
+        print(' Run this: dcm2niix -b y -z n -f "sub-[nn]_ses-1_series\%\s" -o [output folder] [DICOM folder] ')  
         return 2 
 
-    folder = os.curdir 
-    datatypes = ["anat", "dwi", "fmap", "func", "perf", "anat/scout", "anat/DIS2D", "qsm"] 
-    replacements = { 
+    datatypes = ["anat", "dwi", "fmap", "func", "perf", "anat/scout", "anat/DIS2D", "qsm", "spectroscopy"] 
+    
+    replacements = [
+        None, 
+        "scout", 
+        "acq-sag_scout", 
+        "acq-cor_scout", 
+        "acq-tra_scout", 
+        "T1w", 
+        "acq-cor_T1w", 
+        "acq-tra_T1w", 
+        "DIS2D", 
+        "T1w_another",  # What is series 9?  
+        "Chimap", 
+        "Chimap", 
+        "spectroscopy-ACC", 
+        "spectroscopy-ACC-ECC", 
+        "spectroscopy-ACC-no-ECC", 
+        "spectroscopy-RtStr", 
+        "spectroscopy-RtStr-ECC", 
+        "spectroscopy-RtStr-no-ECC",
+        "asl_control" , # 18
+        "asl_label", 
+        "asl_difference", 
+        "dir-PA_M0scan", 
+        "dir-AP_M0scan", 
+        "dir-PA_dwi", # 23 dti 
+        "dir-AP_dwi", 
+        "dir-PA_dwi_ADC", 
+        "dir-PA_dwi_TRACEW", 
+        "dir-PA_dwi_AF", 
+        "dir-PA_dwi_tensor", 
+        None, # Nothing in 29 
+        "fieldmap", # 30 fmap
+        "fieldmap", 
+        "task-rest_bold", 
+        "task-rest_bold_MoCo" 
+    ]
+
+    destinations = {
+        "scout": "anat/scout", 
+        "T1w": "anat", 
+        "DIS2D": "anat/DIS2D",
+        "Chimap": "qsm", 
+        "spectroscopy": "spectroscopy", 
+        "asl": "perf", 
+        "M0": "perf", 
+        "dwi": "dwi", 
+        "fieldmap": "fmap", 
+        # "gre-mt": "fmap", 
+        "bold": "func"
+    }
+
+    # Create datatype folders (eg. anat/ ) 
+    for datatype in datatypes: 
+        try: 
+            os.mkdir(datatype) 
+        except: 
+            print(f"The folder {datatype}/ already exists.")
+
+    # Rename and move each file 
+    files = os.listdir(os.curdir)
+    counter = 1 
+    for old_code in replacements: 
+        # new_code = replacements[old_code] # Texts for replacing 
+        regex = re.compile("series" + str(counter))
+        print(regex)
+        destination = destinations[new_code] # Which folder it will go into 
+        for file in files: 
+            m = regex.search(file)
+            if m:  
+                new_name = regex.sub(new_code, file)
+                os.rename(file, f"{destination}/{new_name}") 
+
+    print("Success! There should now be a BIDS folder structure in this folder, with the files renamed.")
+    return 0 
+
+if __name__ == "__main__": 
+    main()
+
+
+
+""" replacements = {    
         # anat/  
         "T1_mprage_sag": "T1w", 
         # qsm/ 
@@ -37,44 +117,4 @@ def main():
         "AAHead_Scout_64ch-head-coil": "scout", 
         # Unsure how to label -- not in BIDS specification 
         "2D_GRE_MT_tra_2mm": "gre-mt"
-    } 
-    replacements = 
-
-    destinations = {
-        "T1w": "anat", 
-        "Chimap": "qsm", 
-        "scout-i": "anat/scout", 
-        "scout": "anat/scout", 
-        "DIS2D": "anat/DIS2D"
-        "dwi": "dwi", 
-        "fieldmap": "fmap", "gre-mt": "fmap", 
-        "bold": "func", 
-        "asl": "perf"
-        
-    }
-
-    # Create datatype folders (eg. anat/ ) 
-    for datatype in datatypes: 
-        try: 
-            os.mkdir(datatype) 
-        except: 
-            print(f"The folder {datatype}/ already exists.")
-
-    # Rename and move each file 
-    files = os.listdir(folder)
-    for old_code in replacements: 
-        new_code = replacements[old_code] # Texts for replacing 
-        regex = re.compile(old_code) 
-        destination = destinations[new_code] # Which folder it will go into 
-        for file in files: 
-            m = regex.search(file)
-            if m:  
-                new_name = regex.sub(new_code, file)
-                os.rename(file, f"{destination}/{new_name}") 
-
-    print("Success! There should now be a BIDS folder structure in this folder, with the files renamed.")
-    return 0 
-
-if __name__ == "__main__": 
-    main()
-
+    }  """

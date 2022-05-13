@@ -87,7 +87,7 @@ def main():
         new_home = ""
         for destination in destinations: 
             if destination in look_for: 
-                new_home = destination 
+                new_home = destinations[destination]  
                 break 
         for file in files: 
             # m = regex.search(file)

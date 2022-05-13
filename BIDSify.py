@@ -83,10 +83,9 @@ def main():
         look_for = "series" + str(i) 
         regex = re.compile(look_for)
         new_name = replacements[i] 
-        # destination = destinations[new_code] # Which folder it will go into 
         new_home = ""
         for destination in destinations: 
-            if destination in look_for: 
+            if regex.search(destination)
                 new_home = destinations[destination]  
                 break 
         for file in files: 

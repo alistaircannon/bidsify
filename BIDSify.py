@@ -18,7 +18,7 @@ def main():
         return 2 
 
     folder = os.curdir 
-    datatypes = ["anat", "dwi", "fmap", "func", "perf", "scout", "qsm"] 
+    datatypes = ["anat", "dwi", "fmap", "func", "perf", "anat/scout", "anat/DIS2D", "qsm"] 
     replacements = { 
         # anat/  
         "T1_mprage_sag": "T1w", 
@@ -38,10 +38,14 @@ def main():
         # Unsure how to label -- not in BIDS specification 
         "2D_GRE_MT_tra_2mm": "gre-mt"
     } 
+    replacements = 
+
     destinations = {
         "T1w": "anat", 
         "Chimap": "qsm", 
-        "scout-i": "scout", "scout": "scout", 
+        "scout-i": "anat/scout", 
+        "scout": "anat/scout", 
+        "DIS2D": "anat/DIS2D"
         "dwi": "dwi", 
         "fieldmap": "fmap", "gre-mt": "fmap", 
         "bold": "func", 

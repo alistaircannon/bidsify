@@ -79,18 +79,24 @@ def main():
 
     # Rename and move each file 
     files = os.listdir(os.curdir)
-    counter = 1 
-    for old_code in replacements: 
-        # new_code = replacements[old_code] # Texts for replacing 
-        regex = re.compile("series" + str(counter))
-        print(regex)
-        destination = destinations[new_code] # Which folder it will go into 
+    for i in range(33, 0, -1):  
+        look_for = "series" + str(i) 
+        regex = re.compile(look_for)
+        new_name = replacements[i] 
+        # destination = destinations[new_code] # Which folder it will go into 
+        new_home = ""
+        for destination in destinations: 
+            if destination in look_for: 
+                new_home = destination 
+                break 
         for file in files: 
-            m = regex.search(file)
-            if m:  
-                new_name = regex.sub(new_code, file)
-                os.rename(file, f"{destination}/{new_name}") 
-
+            # m = regex.search(file)
+            if look_for in file: 
+            # if m:  
+                fullname = regex.sub(new_name, file)
+                os.rename(file, f"{destination}/{fullname}") 
+        counter -= 1 
+    
     print("Success! There should now be a BIDS folder structure in this folder, with the files renamed.")
     return 0 
 
